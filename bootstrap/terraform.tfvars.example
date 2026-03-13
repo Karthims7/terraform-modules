@@ -1,0 +1,6 @@
+aws_region   = "us-east-1"
+project_name = "demo"
+environment  = "dev"
+
+backend_bucket_name    = "module-ter-demo-dev-tfstate-730335390054"
+backend_dynamodb_table = "module-ter-demo-dev-tf-locks"

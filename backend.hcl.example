@@ -1,0 +1,5 @@
+bucket         = "module-ter-demo-dev-tfstate-730335390054"
+key            = "envs/dev/platform/terraform.tfstate"
+region         = "us-east-1"
+dynamodb_table = "module-ter-demo-dev-tf-locks"
+encrypt        = true
