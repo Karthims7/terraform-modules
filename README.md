@@ -47,10 +47,7 @@ These are intentionally ignored by git, so they are not part of the reusable pro
 From inside `MODULE-TER/`:
 
 ```bash
-bash scripts/reset-local-workspace.sh
-cp bootstrap/terraform.tfvars.example bootstrap/terraform.tfvars
-cp terraform.tfvars.example terraform.tfvars
-cp backend.hcl.example backend.hcl
+bash scripts/setup-new-account.sh
 ```
 
 Then:
@@ -60,6 +57,14 @@ Then:
 3. Update `backend.hcl` with the real bucket/table names created for that account
 4. Confirm the target region (currently defaulted to `ap-south-1`) and run `terraform init -reconfigure -backend-config=backend.hcl`
 5. Continue with `terraform plan` / `terraform apply`
+
+If you run `terraform plan` before step 4, Terraform will fail with:
+
+```bash
+Error: Backend initialization required
+```
+
+That is expected until the backend has been initialized with `terraform init`.
 
 If this is a brand-new account and there is no old state to preserve, use:
 
@@ -111,11 +116,9 @@ DynamoDB does not store the Terraform state itself.
 
 ```bash
 bash scripts/reset-local-workspace.sh
-cp bootstrap/terraform.tfvars.example bootstrap/terraform.tfvars
-cp terraform.tfvars.example terraform.tfvars
-cp backend.hcl.example backend.hcl
+bash scripts/setup-new-account.sh
 
-# edit the 3 files above
+# edit the generated local files
 # for this new account, the examples are already set to ap-south-1
 
 terraform -chdir=bootstrap init
