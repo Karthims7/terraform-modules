@@ -17,8 +17,17 @@ This stack creates the remote state infrastructure for the main Terraform config
 2. Initialize the main stack with the generated backend settings:
 
    ```bash
-   terraform init -reconfigure -backend-config=backend.hcl.example
+   cp ../backend.hcl.example ../backend.hcl
+   # update ../backend.hcl with the real values from bootstrap outputs
+   terraform init -reconfigure -backend-config=backend.hcl
    ```
+
+## New-account bootstrap notes
+
+- The S3 bucket name must be globally unique
+- Use names specific to the target AWS account/environment
+- Do not reuse the old account's backend bucket/table names unless they really exist and are yours
+- After bootstrap apply, use the output values to fill `../backend.hcl`
 
 ## Important Note
 

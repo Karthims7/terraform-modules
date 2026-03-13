@@ -1,6 +1,6 @@
 aws_region   = "us-east-1"
-project_name = "demo"
+project_name = "your-project"
 environment  = "dev"
 
-backend_bucket_name    = "module-ter-demo-dev-tfstate-730335390054"
-backend_dynamodb_table = "module-ter-demo-dev-tf-locks"
+backend_bucket_name    = "replace-with-your-globally-unique-tfstate-bucket"
+backend_dynamodb_table = "replace-with-your-terraform-lock-table"
