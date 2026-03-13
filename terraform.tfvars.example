@@ -1,4 +1,4 @@
-aws_region   = "us-east-1"
+aws_region   = "ap-south-1"
 project_name = "demo"
 environment  = "dev"
 
@@ -7,8 +7,8 @@ vpc_name = "demo-vpc"
 cidr = "10.0.0.0/16"
 
 azs = [
-  "us-east-1a",
-  "us-east-1b"
+  "ap-south-1a",
+  "ap-south-1b"
 ]
 
 public_subnets = [

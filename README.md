@@ -58,7 +58,7 @@ Then:
 1. Update `bootstrap/terraform.tfvars` with **new-account values**
 2. Create the backend resources from `bootstrap/`
 3. Update `backend.hcl` with the real bucket/table names created for that account
-4. Run `terraform init -reconfigure -backend-config=backend.hcl`
+4. Confirm the target region (currently defaulted to `ap-south-1`) and run `terraform init -reconfigure -backend-config=backend.hcl`
 5. Continue with `terraform plan` / `terraform apply`
 
 If this is a brand-new account and there is no old state to preserve, use:
@@ -116,6 +116,7 @@ cp terraform.tfvars.example terraform.tfvars
 cp backend.hcl.example backend.hcl
 
 # edit the 3 files above
+# for this new account, the examples are already set to ap-south-1
 
 terraform -chdir=bootstrap init
 terraform -chdir=bootstrap apply

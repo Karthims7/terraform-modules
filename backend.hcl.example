@@ -1,5 +1,5 @@
 bucket         = "replace-with-your-globally-unique-tfstate-bucket"
 key            = "envs/dev/platform/terraform.tfstate"
-region         = "replace-with-your-aws-region"
+region         = "ap-south-1"
 dynamodb_table = "replace-with-your-terraform-lock-table"
 encrypt        = true
