@@ -15,9 +15,13 @@ rm -f "${ROOT_DIR}/bootstrap/terraform.tfvars"
 
 rm -f "${ROOT_DIR}/terraform.tfstate"
 rm -f "${ROOT_DIR}/terraform.tfstate.backup"
+rm -f "${ROOT_DIR}/bootstrap/terraform.tfstate"
+rm -f "${ROOT_DIR}/bootstrap/terraform.tfstate.backup"
 rm -f "${ROOT_DIR}/tfplan"
+rm -f "${ROOT_DIR}/bootstrap/tfplan"
 rm -f "${ROOT_DIR}"/*.tfplan
 rm -f "${ROOT_DIR}/.terraform.tfstate.lock.info"
+rm -f "${ROOT_DIR}/bootstrap/.terraform.tfstate.lock.info"
 
 echo "Local Terraform cache, local state, plan files, and account-specific overrides removed."
 echo "Next steps:"
