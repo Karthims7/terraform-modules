@@ -1,6 +1,0 @@
-aws_region   = "ap-south-1"
-project_name = "your-project"
-environment  = "dev"
-
-backend_bucket_name    = "replace-with-your-globally-unique-tfstate-bucket"
-backend_dynamodb_table = "replace-with-your-terraform-lock-table"

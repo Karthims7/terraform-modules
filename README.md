@@ -1,17 +1,13 @@
 # module-ter
 
-Enterprise-style Terraform codebase for AWS infrastructure with reusable modules and a separate bootstrap stack for remote state resources.
+Enterprise-style Terraform codebase for AWS infrastructure using reusable modules and simple local Terraform state.
 
 ## Structure
 
 ```text
 .
-├── backend.tf
-├── backend.hcl.example
-├── bootstrap/
 ├── modules/
 │   ├── alb/
-│   ├── backend/
 │   ├── nat/
 │   ├── rds/
 │   └── vpc/
@@ -22,20 +18,17 @@ Enterprise-style Terraform codebase for AWS infrastructure with reusable modules
 └── versions.tf
 ```
 
-## Workflow
-
 ## Reusing this same folder for a brand-new AWS account
 
 Yes — you can reuse the same `MODULE-TER` folder safely for a completely new AWS account.
 
-What matters is **state and backend configuration**, not the folder name itself.
+What matters is your **local state and tfvars**, not the folder name itself.
 
-The previous playground work will not affect a new account **as long as you start with a clean local workspace** and create a new backend for the new account.
+The previous playground work will not affect a new account **as long as you start with a clean local workspace**.
 
 Things from the old account that can affect your next run locally are only:
 
 - `.terraform/`
-- `backend.hcl`
 - `terraform.tfvars`
 - any local `terraform.tfstate*`
 - any old `tfplan`
@@ -47,82 +40,46 @@ These are intentionally ignored by git, so they are not part of the reusable pro
 From inside `MODULE-TER/`:
 
 ```bash
-bash scripts/setup-new-account.sh
+bash scripts/reset-local-workspace.sh
+cp terraform.tfvars.example terraform.tfvars
 ```
 
 Then:
 
-1. Update `bootstrap/terraform.tfvars` with **new-account values**
-2. Create the backend resources from `bootstrap/`
-3. Update `backend.hcl` with the real bucket/table names created for that account
-4. Confirm the target region (currently defaulted to `ap-south-1`) and run `terraform init -reconfigure -backend-config=backend.hcl`
-5. Continue with `terraform plan` / `terraform apply`
+1. Update `terraform.tfvars` with values for the new account
+2. Run `terraform init`
+3. Run `terraform plan`
+4. Run `terraform apply`
 
-If you run `terraform plan` before step 4, Terraform will fail with:
-
-```bash
-Error: Backend initialization required
-```
-
-That is expected until the backend has been initialized with `terraform init`.
-
-If this is a brand-new account and there is no old state to preserve, use:
-
-```bash
-terraform init -reconfigure -backend-config=backend.hcl
-```
-
-If you are migrating existing local state into the new backend, use:
-
-```bash
-terraform init -migrate-state -backend-config=backend.hcl
-```
-
-### 1. Create backend infrastructure
-
-```bash
-terraform -chdir=bootstrap init
-terraform -chdir=bootstrap apply
-```
-
-### 2. Initialize the main stack with remote state
-
-```bash
-cp backend.hcl.example backend.hcl
-terraform init -reconfigure -backend-config=backend.hcl
-```
-
-### 3. Configure deployment variables
+## Standard workflow
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars
-```
+# edit terraform.tfvars
 
-### 4. Plan and apply
-
-```bash
+terraform init
 terraform plan
 terraform apply
 ```
 
-## Backend design
+## Local state note
 
-- **S3** stores the Terraform state file
-- **DynamoDB** provides state locking
+This project now uses Terraform's default local state behavior.
 
-DynamoDB does not store the Terraform state itself.
+- no S3 backend
+- no DynamoDB lock table
+- no bootstrap stack
 
-## Recommended first-time workflow in a new account
+That makes first-time setup much simpler for a fresh account.
+
+## Recommended first-time workflow
 
 ```bash
 bash scripts/reset-local-workspace.sh
-bash scripts/setup-new-account.sh
+cp terraform.tfvars.example terraform.tfvars
 
-# edit the generated local files
-# for this new account, the examples are already set to ap-south-1
+# edit terraform.tfvars
 
-terraform -chdir=bootstrap init
-terraform -chdir=bootstrap apply
-terraform init -reconfigure -backend-config=backend.hcl
+terraform init
 terraform plan
 ```

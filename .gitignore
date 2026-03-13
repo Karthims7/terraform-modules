@@ -14,7 +14,6 @@ crash.*.log
 # Local variable and backend overrides
 *.tfvars
 !*.tfvars.example
-backend.hcl
 
 # Override files
 override.tf
