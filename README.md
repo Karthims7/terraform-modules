@@ -1,4 +1,4 @@
-# terraform-infra
+# module-ter
 
 Enterprise-style Terraform codebase for AWS infrastructure with reusable modules and a separate bootstrap stack for remote state resources.
 
@@ -26,7 +26,7 @@ Enterprise-style Terraform codebase for AWS infrastructure with reusable modules
 
 ## Reusing this same folder for a brand-new AWS account
 
-Yes — you can reuse the same `MODULE-TER/terraform-infra` folder safely for a completely new AWS account.
+Yes — you can reuse the same `MODULE-TER` folder safely for a completely new AWS account.
 
 What matters is **state and backend configuration**, not the folder name itself.
 
@@ -44,7 +44,7 @@ These are intentionally ignored by git, so they are not part of the reusable pro
 
 ### Clean-start steps for a new AWS account
 
-From inside `terraform-infra/`:
+From inside `MODULE-TER/`:
 
 ```bash
 bash scripts/reset-local-workspace.sh
